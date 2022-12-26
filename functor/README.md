@@ -8,6 +8,7 @@
 
 ### Examples
 
+```
 //_ ex1
 //_ This is the test functor
 
@@ -23,3 +24,4 @@ cout << str << endl;
 
 MyFunctor funct;
 funct("This is test");
+```
