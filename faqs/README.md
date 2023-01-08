@@ -152,3 +152,17 @@ No, static member functions cannot be virtual because static member functions ar
 #### Can static member functions access the ordinary data members? Why?
 
 No, a static member functions cannot access the ordinary data members because the address of the current object quietly passed in when any member function is called, but static member function has no this pointer.
+
+## const
+
+Before const first we need to understand how pointers declaration read in C++
+
+Pointers declaration should be read from right to left.
+
+for example,
+
+```
+int * can be read as a pointer to int
+const int * is a pointer to a int that cannot be changed via that pointer
+int* const is a constant pointer to a int.
+```
