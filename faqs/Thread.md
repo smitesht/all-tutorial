@@ -22,3 +22,46 @@ The thread shares the resources with the process like the memory, code and globa
 
 4. The data segment and code segment of each process are independent of the other.
    Threads share data segment and code segment with their peer threads
+
+# Create Thread in C++11
+
+### create thread without parameter
+
+```
+#include <iostream>
+#include <thread>
+
+using namespace std;
+
+void thread_function() {
+    std::cout << "thread function\n";
+}
+
+int main()
+{
+    std::thread th(&thread_function);
+    std::cout << "Main Thread" << endl;
+
+    th.join(); // Main thread waits for the thread th to finish
+    return 0;
+}
+```
+
+### create thread with parameters
+
+```
+void getEvenRange(int max) {
+    cout << "thread function, parameter " << max << endl;
+}
+
+int main()
+{
+    std::thread thPara(&getEvenRange, 50);
+    std::cout << "Main Thread" << endl;
+
+    thPara.join();
+
+    return 0;
+}
+
+```
