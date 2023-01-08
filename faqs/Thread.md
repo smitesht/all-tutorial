@@ -12,8 +12,6 @@ The thread shares the resources with the process like the memory, code and globa
 
 ## Difference between Process and Thread
 
-Process:
-
 1. A process is an instance of a program that is being executed or processed
    A thread is an execution path throguh a program or process
 
