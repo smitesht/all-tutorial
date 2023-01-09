@@ -49,4 +49,4 @@ Snowflake schema is the nested version of star. Snow flaking is a process that c
 Advantages: Data redundancy is completelty removed by creating new dimension tables.
 Disadvantages: Due to normalization of dimension tables, the ETL system has to load the number of tables.
 
-[alt text](snow_flake.png "Snow Flak")
+![alt text](snow_flake.png "Snow Flak")
