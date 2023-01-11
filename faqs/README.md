@@ -166,3 +166,76 @@ int * can be read as a pointer to int
 const int * is a pointer to a int that cannot be changed via that pointer
 int* const is a constant pointer to a int.
 ```
+
+## inline functions
+
+inline functions are functions whose code get inserted at the point where function called. The inline function substitute the code where the function called.
+
+### Why we need inline function
+
+For normal function, when the function call, the arguments are push and pop which create overhead for the small functions. With the inline function, the whole code replaced at the point where the function called. With this speed up the process.
+
+### Syntax of inline function
+
+inline return-type function-name(parameters);
+
+for example,
+
+```
+inline int MyFun(int);
+```
+
+### Does inline functions are virtual functions? Why?
+
+No, inline functions cannot be virtual function because inline functions are bound at compile time while virtual functions are bound at runtime.
+
+### Which functions are treated as inline function?
+
+Compiler-generated default constructor, copy constructor, destructors, and assignment operator are treated as inline.
+
+## Function Overloading
+
+### What is function overloading
+
+Function overloading means defining multiple functions with the same name but differ in number, type and order of the arguments. It is a compile time polymorphism.
+
+C++ allows to specify more than one definition for a function name or an operator in the same scope.
+
+```
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class MyClass {
+public:
+    int add(int, int);
+    float add(float, float);
+    string add(string, string);
+};
+
+int MyClass::add(int n1, int n2)
+{
+    return (n1 + n2);
+}
+
+float MyClass::add(float n1, float n2)
+{
+    return (n1 + n2);
+}
+
+string MyClass::add(string str1, string str2)
+{
+    return (str1 + " " + str2);
+}
+
+int main()
+{
+    MyClass c1;
+
+    cout << c1.add(10, 10)<<endl;
+    cout << c1.add(20.25f, 30.54f)<<endl;
+    cout << c1.add("Smitesh", "Ivy");
+}
+
+```
