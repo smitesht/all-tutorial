@@ -68,6 +68,18 @@ increment();
 cout << x << endl; // display 11
 ```
 
+#### Ex Lambda using Capture Clouser to access all the outside elements
+
+```
+int num1 = 5, num2 = 6;
+
+auto multiply = [=]() -> int {
+    return num1 * num2;
+    };
+
+cout << multiply();  // 30
+```
+
 #### Ex
 
 ```
