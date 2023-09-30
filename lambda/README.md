@@ -22,14 +22,20 @@ Generally, lambda functions are short snippets of the code that are not to be re
 
 ### Examples
 
+```
+auto add = [](int num1, int num2) -> int {
+  return (num1 + num2);
+};
+
+cout << add(1, 2)<< endl;
+```
+
 #### Ex
 
 ```
 auto la = [] { return "Hello I'm Lambda function"; };
 std::cout << la()<<endl;
 ```
-
-
 
 #### Ex
 
@@ -47,6 +53,19 @@ vector<int> v = { 2,3,4,6,8,10,32,56,43,76,56,85,43 };
         }
         });
 
+```
+
+#### Ex Lambda using Capture Clouser
+
+```
+int x = 10;
+
+auto increment = [&x](){
+     x++;
+    };
+
+increment();
+cout << x << endl; // display 11
 ```
 
 #### Ex
