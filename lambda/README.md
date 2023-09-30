@@ -116,3 +116,68 @@ auto ret = count_if(vstr.begin(), vstr.end(), [len](string str) {
 std::cout << ret << endl;
 
 ```
+
+### constexpr Lambdas
+
+### What is constexpr
+
+The constexpr specifier promises the variable or a function can be evaluated during compile time.
+The compiler emits an error if the expression cannot be evaluated during compile time.
+
+```
+int main()
+{
+   constexpr int n = 123; //OK, 123 is a compile-time constant
+   // expression
+   constexpr double d = 456.78; //OK, 456.78 is a compile-time constant // expression
+   constexpr double d2 = d; //OK, d is a constant expression
+   int x = 123;
+   constexpr int n2 = x; //compile-time error
+   // the value of x is not known during // compile-time
+}
+```
+
+In C++17, lambdas are implicitly constexpr if possible. 
+Any lambda can be used in compile-time contexts provided the features it uses are valid for compile-time contexts.
+(e.g. only literal types, NO static variable, No virtual, NO try/catch, No new/delete).
+
+```
+
+auto squared = [](auto val) { // implicitly constexpr since C++17
+  return val*val;
+};
+
+std::array<int,squared(5)> a; // OK since C++17 => std::array<int,25>
+
+```
+
+When we use static in the lambda function, the constexpr will not work and the compiler throws an error.
+However, we can use lambda expressions with static and without constexpr.
+
+```
+auto squared2 = [](auto val) { // implicitly constexpr since C++17
+static int calls = 0; // OK, but disables lambda for constexpr contexts
+...
+return val*val;
+};
+std::array<int,squared2(5)> a; // ERROR: static variable in compile-time context
+std::cout << squared2(5) << '\n'; // OK
+```
+
+To find out at compile time whether a lambda is valid for a compile-time context, you can declare it as constexpr
+
+```
+
+auto squared3 = [](auto val) constexpr { // OK since C++17
+    return val*val;
+};
+
+
+With specified return types the syntax looks as follows:
+
+
+auto squared3i = [](int val) constexpr -> int { // OK since C++17
+   return val*val;
+};
+
+```
