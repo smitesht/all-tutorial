@@ -181,3 +181,67 @@ auto squared3i = [](int val) constexpr -> int { // OK since C++17
 };
 
 ```
+
+## Passing Copies of this to lambdas
+
+When using lambdas in member functions, we have no implicit access to the object the member function is called for.
+Inside the lambda, without capturing this in any form, we cannot use members of the object.
+
+```
+class C {
+  private:
+     std::string name;
+   public:
+     ...
+     void foo()
+     {
+        auto l1 = [] { std::cout << name << '\n'; }; // ERROR
+        auto l2 = [] { std::cout << this->name << '\n'; }; // ERROR
+         ...
+     }
+};
+```
+
+In C++11 and C++14, e have to pass ***this*** either by value or by reference:
+
+```
+class C {
+   private:
+      std::string name;
+    public:
+      ...
+      void foo() {
+          auto l1 = [this] { std::cout << name << '\n'; }; // OK
+          auto l2 = [=] { std::cout << name << '\n'; }; // OK
+          auto l3 = [&] { std::cout << name << '\n'; }; // OK
+          ...
+        }
+};
+```
+
+However, the above approach creates a problem when the lifetime of the lambda exceeds the lifetime of the object upon which the member function is invoked.
+For example, when lambda defines the task of a new thread, which should use its own copy of the object to avoid any concurrency or lifetime issues. 
+
+In C++17, we can explicitly ask to capture a copy of the current object by capturing ****this*** :
+
+```
+class C {
+  private:
+    std::string name;
+  public:
+    ...
+    void foo() {
+      auto l1 = [*this] { std::cout << name << '\n'; };
+      ...
+    }
+};
+
+
+That is, the capture *this means that a copy of the current object is passed to the lambda.
+Still you can combine capturing *this with other captures, as long as there is no contradiction for
+handling this:
+
+auto l2 = [&, *this] { ... }; // OK
+auto l3 = [this, *this] { ... }; // ERROR
+
+```
